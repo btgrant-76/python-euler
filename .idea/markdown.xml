@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MarkdownSettings">
+    <option name="customStylesheetText" value="html, body {  &#10;  font-family: sans-serif; /* &quot;Arial&quot;, &quot;FuraCode Nerd Font&quot;,&quot;Source Sans Pro&quot;, &quot;Microsoft JhengHei&quot;, &quot;Roboto&quot;, &quot;Arial&quot;, &quot;Lucida Grande&quot;, sans-serif;*/&#10;}&#10;&#10;/* b, strong { font-weight: 700 } */&#10;" />
+    <enabledExtensions>
+      <entry key="MermaidLanguageExtension" value="true" />
+      <entry key="PlantUMLLanguageExtension" value="true" />
+    </enabledExtensions>
+    <option name="fontSize" value="12" />
+  </component>
+</project>
