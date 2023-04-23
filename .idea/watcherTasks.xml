@@ -14,7 +14,7 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="$USER_HOME$/.pyenv/versions/3.9.7/envs/py-euler/bin/black" />
+      <option name="program" value="$USER_HOME$/.pyenv/versions/3.9.16/envs/py-euler/bin/black" />
       <option name="runOnExternalChanges" value="false" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="false" />
@@ -40,7 +40,7 @@
         </array>
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="$USER_HOME$/.pyenv/versions/3.9.7/envs/py-euler/bin/flake8" />
+      <option name="program" value="$USER_HOME$/.pyenv/versions/3.9.16/envs/py-euler/bin/flake8" />
       <option name="runOnExternalChanges" value="false" />
       <option name="scopeName" value="Current File" />
       <option name="trackOnlyRoot" value="false" />
