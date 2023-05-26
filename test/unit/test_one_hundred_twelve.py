@@ -13,6 +13,10 @@ from pytest import mark
         (545, True),
         (123456789, False),
         (9876543210, False),
+        (11111111112, False),
+        (5555555553, False),
+        (111121, True),
+        (555535, True),
     ],  # increasing  # decreasing
 )
 # @mark.skip
