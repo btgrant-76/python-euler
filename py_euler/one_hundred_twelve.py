@@ -16,9 +16,9 @@ Find the least number for which the proportion of bouncy numbers is exactly 99%.
 from typing import Optional
 
 
-def __assess_direction(cur: str, next: str, dir: Optional[str]) -> str:
-    cur_int = int(cur)
-    next_int = int(next)
+def __assess_direction(cur_num: str, next_num: str, direction: Optional[str]) -> str:
+    cur_int = int(cur_num)
+    next_int = int(next_num)
 
     cur_next_comparison = None
 
@@ -28,25 +28,28 @@ def __assess_direction(cur: str, next: str, dir: Optional[str]) -> str:
         cur_next_comparison = "inc"
 
     # no direction had been detected prior to this
-    if cur_next_comparison is None and dir is not None:
-        cur_next_comparison = dir
+    if cur_next_comparison is None and direction is not None:
+        cur_next_comparison = direction
 
     return cur_next_comparison
 
 
 def is_number_bouncy(number: int) -> bool:
+    # TODO try to rewrite this as iterative instead of recursive
     def record_bounce(
-        cur: str, next: str, dir: Optional[str], remainders: [str] = None
+        cur_num: str, next_num: str, direction: Optional[str], remainders: [str] = None
     ) -> bool:
-        cur_next_comparison = __assess_direction(cur, next, dir)
+        cur_next_comparison = __assess_direction(cur_num, next_num, direction)
 
-        if dir != cur_next_comparison and dir is not None:
+        if direction != cur_next_comparison and direction is not None:
             return True  # direction changed, so it's bouncy
 
         if len(remainders) == 0:
             return False  # no more numbers
 
-        return record_bounce(next, remainders.pop(), cur_next_comparison, remainders)
+        return record_bounce(
+            next_num, remainders.pop(), cur_next_comparison, remainders
+        )
 
     num_str = list(number.__str__())
     num_str_len = len(num_str)
@@ -56,10 +59,12 @@ def is_number_bouncy(number: int) -> bool:
 
     num_str.reverse()
 
-    # for i in enumerate(num_str):
-    #     print(i)
-
     return record_bounce(num_str.pop(), num_str.pop(), None, num_str)
+
+
+def count_bouncy_numbers(numbers: [int]) -> int:
+    bouncy_nums = list(filter(lambda n: is_number_bouncy(n), numbers))
+    return len(bouncy_nums)
 
 
 if __name__ == "__main__":
