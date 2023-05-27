@@ -1,4 +1,6 @@
 """
+https://projecteuler.net/problem=112
+
 Working from left-to-right if no digit is exceeded by the digit to its left
 it is called an increasing number; for example, 134468.
 
@@ -16,30 +18,29 @@ Find the least number for which the proportion of bouncy numbers is exactly 99%.
 from typing import Optional
 
 
-def __assess_direction(cur_num: str, next_num: str, direction: Optional[str]) -> str:
-    cur_int = int(cur_num)
-    next_int = int(next_num)
-
-    cur_next_comparison = None
-
-    if cur_int > next_int:
-        cur_next_comparison = "dec"
-    elif cur_int < next_int:
-        cur_next_comparison = "inc"
-
-    # no direction had been detected prior to this
-    if cur_next_comparison is None and direction is not None:
-        cur_next_comparison = direction
-
-    return cur_next_comparison
-
-
 def is_number_bouncy(number: int) -> bool:
+    def assess_direction(cur_num: str, next_num: str, direction: Optional[str]) -> str:
+        cur_int = int(cur_num)
+        next_int = int(next_num)
+
+        cur_next_comparison = None
+
+        if cur_int > next_int:
+            cur_next_comparison = "dec"
+        elif cur_int < next_int:
+            cur_next_comparison = "inc"
+
+        # no direction had been detected prior to this
+        if cur_next_comparison is None and direction is not None:
+            cur_next_comparison = direction
+
+        return cur_next_comparison
+
     # TODO try to rewrite this as iterative instead of recursive
     def record_bounce(
         cur_num: str, next_num: str, direction: Optional[str], remainders: [str] = None
     ) -> bool:
-        cur_next_comparison = __assess_direction(cur_num, next_num, direction)
+        cur_next_comparison = assess_direction(cur_num, next_num, direction)
 
         if direction != cur_next_comparison and direction is not None:
             return True  # direction changed, so it's bouncy
@@ -62,11 +63,24 @@ def is_number_bouncy(number: int) -> bool:
     return record_bounce(num_str.pop(), num_str.pop(), None, num_str)
 
 
-def count_bouncy_numbers(numbers: [int]) -> int:
-    bouncy_nums = list(filter(lambda n: is_number_bouncy(n), numbers))
-    return len(bouncy_nums)
+def find_number_with_bouncy_percentage(percent: int) -> int:
+    test_number = 0
+    numbers_tested = 0
+    bouncy_count = 0
+
+    while True:
+        test_number += 1
+        is_bouncy = is_number_bouncy(test_number)
+        numbers_tested += 1
+
+        if is_bouncy:
+            bouncy_count += 1
+            percent_bouncy_numbers = int((bouncy_count / numbers_tested) * 100)
+            if percent_bouncy_numbers == percent:
+                return test_number
 
 
 if __name__ == "__main__":
-    for n in [134468, 66420, 155349]:
-        is_number_bouncy(n)
+    percentage = 99
+    number_with_percentage = find_number_with_bouncy_percentage(percentage)
+    print(f"{percentage}% of the numbers under {number_with_percentage} are bouncy")

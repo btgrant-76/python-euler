@@ -40,22 +40,16 @@ def test_numbers_with_all_the_same_digits_are_never_bouncy(n: int) -> None:
 
 
 @mark.parametrize(
-    "numbers, count",
+    "percent, number",
     [
-        (
-            [
-                134468,
-                66420,
-                155349,
-            ],
-            1,
-        ),
-        (list(range(1, 1000)), 525),
-        (
-            list(range(1, 21781)),
-            19602,
-        ),
+        (50, 538),
+        (90, 21780),
     ],
 )
-def test_count_bouncy_numbers(numbers: [int], count: int) -> None:
-    assert count == test_me.count_bouncy_numbers(numbers)
+def test_find_bouncy_number_percentage(percent: int, number: int) -> None:
+    assert number == test_me.find_number_with_bouncy_percentage(percent)
+
+
+@mark.skip("takes a long time")
+def test_solution() -> None:
+    assert 1587000 == test_me.find_number_with_bouncy_percentage(99)
