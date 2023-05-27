@@ -18,7 +18,7 @@ Find the least number for which the proportion of bouncy numbers is exactly 99%.
 from typing import Optional
 
 
-def is_number_bouncy(number: int) -> bool:
+def is_bouncy_by_recursion(number: int) -> bool:
     def assess_direction(cur_num: str, next_num: str, direction: Optional[str]) -> str:
         cur_int = int(cur_num)
         next_int = int(next_num)
@@ -36,7 +36,6 @@ def is_number_bouncy(number: int) -> bool:
 
         return cur_next_comparison
 
-    # TODO try to rewrite this as iterative instead of recursive
     def record_bounce(
         cur_num: str, next_num: str, direction: Optional[str], remainders: [str] = None
     ) -> bool:
@@ -55,12 +54,32 @@ def is_number_bouncy(number: int) -> bool:
     num_str = list(number.__str__())
     num_str_len = len(num_str)
 
-    if num_str_len in [1]:
+    if num_str_len in [1, 2]:
         return False
 
-    num_str.reverse()
-
     return record_bounce(num_str.pop(), num_str.pop(), None, num_str)
+
+
+def is_bouncy_by_list_comparison(number: int) -> bool:
+    num_str = list(number.__str__())
+    num_str_len = len(num_str)
+
+    if num_str_len in [1, 2]:
+        return False
+
+    sorted_num_str = sorted(num_str)
+
+    if sorted_num_str == num_str:
+        return False  # increasing
+
+    sorted_num_str.reverse()
+    if sorted_num_str == num_str:
+        return False  # decreasing
+
+    return True
+
+
+is_bouncy = is_bouncy_by_list_comparison  # is_number_bouncy_recursively
 
 
 def find_number_with_bouncy_percentage(percent: int) -> int:
@@ -70,10 +89,10 @@ def find_number_with_bouncy_percentage(percent: int) -> int:
 
     while True:
         test_number += 1
-        is_bouncy = is_number_bouncy(test_number)
+        number_bounces = is_bouncy(test_number)
         numbers_tested += 1
 
-        if is_bouncy:
+        if number_bounces:
             bouncy_count += 1
             percent_bouncy_numbers = int((bouncy_count / numbers_tested) * 100)
             if percent_bouncy_numbers == percent:
